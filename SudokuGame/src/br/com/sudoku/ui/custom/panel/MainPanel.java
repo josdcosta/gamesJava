@@ -1,7 +1,7 @@
 package br.com.sudoku.ui.custom.panel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Dimension;
 
 public class MainPanel extends JPanel {
 

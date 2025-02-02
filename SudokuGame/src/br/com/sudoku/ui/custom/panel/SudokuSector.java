@@ -2,9 +2,9 @@ package br.com.sudoku.ui.custom.panel;
 
 import br.com.sudoku.ui.custom.input.NumberText;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+import java.awt.Dimension;
 import java.util.List;
 
 import static java.awt.Color.black;

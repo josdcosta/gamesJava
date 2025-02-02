@@ -4,10 +4,11 @@ import br.com.sudoku.model.Space;
 import br.com.sudoku.services.EventEnum;
 import br.com.sudoku.services.EventListener;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Dimension;
 
 public class NumberText extends JTextField implements EventListener {
     private Space space;

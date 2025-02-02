@@ -1,6 +1,9 @@
 package br.com.sudoku.services;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class NotifierService {
     private final Map<EventEnum, List<EventListener>> listeners = new HashMap<>(){{

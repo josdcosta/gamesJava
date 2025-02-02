@@ -3,8 +3,9 @@ package br.com.sudoku;
 import br.com.sudoku.ui.custom.frame.MainFrame;
 import br.com.sudoku.ui.custom.panel.MainPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.Dimension;
 
 public class UIMain {
 

@@ -2,8 +2,8 @@ package br.com.sudoku.services;
 
 import br.com.sudoku.model.Board;
 import br.com.sudoku.model.Difficult;
-import br.com.sudoku.model.GameStatusEnum;
 import br.com.sudoku.model.Space;
+import br.com.sudoku.model.GameStatusEnum;
 
 import java.util.List;
 

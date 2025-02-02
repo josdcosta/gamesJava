@@ -1,6 +1,6 @@
 package br.com.sudoku.ui.custom.buttons;
 
-import javax.swing.*;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 
 public class DifficultLevelButton extends JButton {

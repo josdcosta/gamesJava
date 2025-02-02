@@ -5,20 +5,24 @@ import br.com.sudoku.model.Space;
 import br.com.sudoku.services.BoardServices;
 import br.com.sudoku.services.EventEnum;
 import br.com.sudoku.services.NotifierService;
+import br.com.sudoku.ui.custom.buttons.CheckGameStatusButton;
 import br.com.sudoku.ui.custom.buttons.DifficultLevelButton;
 import br.com.sudoku.ui.custom.buttons.FinishGameButton;
-import br.com.sudoku.ui.custom.buttons.CheckGameStatusButton;
 import br.com.sudoku.ui.custom.buttons.ResetButton;
 import br.com.sudoku.ui.custom.frame.MainFrame;
 import br.com.sudoku.ui.custom.input.NumberText;
 import br.com.sudoku.ui.custom.panel.MainPanel;
 import br.com.sudoku.ui.custom.panel.SudokuSector;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.sudoku.model.DifficultEnum.*;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -116,37 +120,40 @@ public class MainScreen {
     }
 
     private void addDifficultLevel(JPanel mainPanel) {
-        String[] opcoes = {"Muito fácil", "Fácil", "Médio", "Difícil", "Muito difícil"};
+        String[] options = {"Muito fácil", "Fácil", "Médio", "Difícil", "Muito difícil"};
         difficultLevel = new DifficultLevelButton(e -> {
-            int escolha = JOptionPane.showOptionDialog(
+            int choice = JOptionPane.showOptionDialog(
                     null,
                     "Escolha o nível de dificuldade:",
                     "Configuração do Jogo",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    opcoes,
-                    opcoes[0]);
+                    options,
+                    options[0]);
 
-            switch (opcoes[escolha]){
-                case "Muito fácil" -> {
-                    remountPanel(mainPanel, 35);
+            if (choice == -1) {
+                JOptionPane.showMessageDialog(null, "Nenhuma opção selecionada.");
+            }else {
+                switch (options[choice]) {
+                    case "Muito fácil" -> {
+                        remountPanel(mainPanel, VERYEASY.getLevel());
+                    }
+                    case "Fácil" -> {
+                        remountPanel(mainPanel, EASY.getLevel());
+                    }
+                    case "Médio" -> {
+                        remountPanel(mainPanel, MODERATE.getLevel());
+                    }
+                    case "Difícil" -> {
+                        remountPanel(mainPanel, HARD.getLevel());
+                    }
+                    case "Muito difícil" -> {
+                        remountPanel(mainPanel, VERYHARD.getLevel());
+                    }
+                    default -> JOptionPane.showMessageDialog(null, "Nenhuma opção selecionada.");
                 }
-                case "Fácil" -> {
-                    remountPanel(mainPanel, 30);
-                }
-                case "Médio" -> {
-                    remountPanel(mainPanel, 25);
-                }
-                case "Difícil" -> {
-                    remountPanel(mainPanel, 20);
-                }
-                case "Muito difícil" -> {
-                    remountPanel(mainPanel, 18);
-                }
-                default -> JOptionPane.showMessageDialog(null, "Nenhuma opção selecionada.");
             }
-
         });
         mainPanel.add(difficultLevel);
     }

@@ -1,10 +1,12 @@
 package br.com.sudoku.model;
 
 import br.com.sudoku.util.BoardTemplate;
-import br.com.sudoku.model.GameStatusEnum;
 
-import java.util.*;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Collection;
+import java.util.Random;
 import static br.com.sudoku.model.GameStatusEnum.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -184,8 +186,6 @@ public class Board {
             }
         }
     }
-
-
 
     public boolean changeValue(final int col, final int row, final int value){
         var space = this.spaces.get(col).get(row);
