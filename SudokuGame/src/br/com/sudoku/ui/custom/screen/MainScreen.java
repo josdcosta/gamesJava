@@ -1,9 +1,11 @@
 package br.com.sudoku.ui.custom.screen;
 
+import br.com.sudoku.model.Difficult;
 import br.com.sudoku.model.Space;
 import br.com.sudoku.services.BoardServices;
 import br.com.sudoku.services.EventEnum;
 import br.com.sudoku.services.NotifierService;
+import br.com.sudoku.ui.custom.buttons.DifficultLevelButton;
 import br.com.sudoku.ui.custom.buttons.FinishGameButton;
 import br.com.sudoku.ui.custom.buttons.CheckGameStatusButton;
 import br.com.sudoku.ui.custom.buttons.ResetButton;
@@ -16,7 +18,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
@@ -30,6 +31,7 @@ public class MainScreen {
     private JButton checkGameStatusButton;
     private JButton finishGameButton;
     private JButton resetButton;
+    private JButton difficultLevel;
 
 
     public MainScreen(){
@@ -40,18 +42,11 @@ public class MainScreen {
     public void buildMainScreen(){
         JPanel mainPanel = new MainPanel(dimension);
         JFrame mainFrame = new MainFrame(dimension, mainPanel);
-        for (int r = 0; r < 9; r+=3){
-            var endRow = r + 2;
-            for (int c = 0; c < 9; c+=3) {
-                var endCol = c + 2;
-                var spaces = getSpacesFromSector(boardServices.getSpaces(), c, endCol, r, endRow);
-                JPanel sector = genetateSection(spaces);
-                mainPanel.add(sector);
-            }
-        }
+        reconstructor(mainPanel);
         addResetButton(mainPanel);
         addShowGameStatusButton(mainPanel);
         addFinishGameButton(mainPanel);
+        addDifficultLevel(mainPanel);
         mainFrame.revalidate();
         mainFrame.repaint();
     }
@@ -113,30 +108,77 @@ public class MainScreen {
                     QUESTION_MESSAGE
             );
             if (dialogResult == JOptionPane.YES_OPTION) {
-                boardServices.reset(); // Reset dos dados internos
-                mainPanel.removeAll(); // Remove todos os componentes da tela
 
-                // Reconstroi os setores do tabuleiro dentro do mesmo mainPanel
-                for (int r = 0; r < 9; r += 3) {
-                    var endRow = r + 2;
-                    for (int c = 0; c < 9; c += 3) {
-                        var endCol = c + 2;
-                        var spaces = getSpacesFromSector(boardServices.getSpaces(), c, endCol, r, endRow);
-                        JPanel sector = genetateSection(spaces);
-                        mainPanel.add(sector);
-                    }
-                }
-
-                // Adiciona novamente os botões
-                addResetButton(mainPanel);
-                addShowGameStatusButton(mainPanel);
-                addFinishGameButton(mainPanel);
-
-                mainPanel.revalidate(); // Atualiza o layout
-                mainPanel.repaint(); // Re-renderiza a tela
+                remountPanel(mainPanel, Difficult.getLevel());
             }
         });
         mainPanel.add(resetButton);
+    }
+
+    private void addDifficultLevel(JPanel mainPanel) {
+        String[] opcoes = {"Muito fácil", "Fácil", "Médio", "Difícil", "Muito difícil"};
+        difficultLevel = new DifficultLevelButton(e -> {
+            int escolha = JOptionPane.showOptionDialog(
+                    null,
+                    "Escolha o nível de dificuldade:",
+                    "Configuração do Jogo",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcoes,
+                    opcoes[0]);
+
+            switch (opcoes[escolha]){
+                case "Muito fácil" -> {
+                    remountPanel(mainPanel, 35);
+                }
+                case "Fácil" -> {
+                    remountPanel(mainPanel, 30);
+                }
+                case "Médio" -> {
+                    remountPanel(mainPanel, 25);
+                }
+                case "Difícil" -> {
+                    remountPanel(mainPanel, 20);
+                }
+                case "Muito difícil" -> {
+                    remountPanel(mainPanel, 18);
+                }
+                default -> JOptionPane.showMessageDialog(null, "Nenhuma opção selecionada.");
+            }
+
+        });
+        mainPanel.add(difficultLevel);
+    }
+
+    private void reconstructor (JPanel mainPanel){
+        for (int r = 0; r < 9; r+=3){
+            var endRow = r + 2;
+            for (int c = 0; c < 9; c+=3) {
+                var endCol = c + 2;
+                var spaces = getSpacesFromSector(boardServices.getSpaces(), c, endCol, r, endRow);
+                JPanel sector = genetateSection(spaces);
+                mainPanel.add(sector);
+            }
+        }
+    }
+
+    private void remountPanel(JPanel mainPanel, int DifficultLevel) {
+        boardServices.difficultLevel(DifficultLevel);
+        boardServices.reset(); // Reset dos dados internos
+        mainPanel.removeAll(); // Remove todos os componentes da tela
+
+        // Reconstroi os setores do tabuleiro dentro do mesmo mainPanel
+        reconstructor(mainPanel);
+
+        // Adiciona novamente os botões
+        addResetButton(mainPanel);
+        addShowGameStatusButton(mainPanel);
+        addFinishGameButton(mainPanel);
+        addDifficultLevel(mainPanel);
+
+        mainPanel.revalidate(); // Atualiza o layout
+        mainPanel.repaint(); // Re-renderiza a tela
     }
 
 
