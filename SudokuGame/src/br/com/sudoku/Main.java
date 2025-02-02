@@ -9,6 +9,5 @@ public class Main {
 
         var mainScreen = new MainScreen();
         mainScreen.buildMainScreen();
-
     }
 }

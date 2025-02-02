@@ -2,7 +2,7 @@ package br.com.sudoku.util;
 
 public class BoardTemplate {
 
-    public String boardTemplate(){
+    public String template(){
         return """
              |0 1 2 | 3 4 5 | 6 7 8 |
            ---------+-------+---------
@@ -24,6 +24,6 @@ public class BoardTemplate {
 
     @Override
     public String toString() {
-        return boardTemplate();
+        return template();
     }
 }

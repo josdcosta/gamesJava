@@ -82,6 +82,7 @@ public class MainScreen {
                 checkGameStatusButton.setEnabled(false);
             } else {
                 JOptionPane.showMessageDialog(null, "O jogo contem inconsistências!");
+                boardServices.viewResolution();
             }
         });
         mainPanel.add(finishGameButton);

@@ -39,4 +39,8 @@ public class BoardServices {
         return this.board.gameIsFinished();
     }
 
+    public void viewResolution(){
+        this.board.viewResolution();
+    }
+
 }

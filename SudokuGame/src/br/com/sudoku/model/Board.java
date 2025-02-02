@@ -133,6 +133,26 @@ public class Board {
         }
     }
 
+    public void viewResolution() {
+        System.out.println("Solução do Sudoku:");
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                int value = spaces.get(j).get(i).getExpected(); // Troquei i e j para inverter as linhas e colunas
+                // Adiciona um formato de grid mais claro, com bordas entre os quadrantes 3x3
+                if (j % 3 == 0 && j != 0) {
+                    System.out.print("| ");
+                }
+                System.out.print(value + " ");
+            }
+            System.out.println(); // Nova linha para cada linha do tabuleiro
+            // Adiciona uma linha separadora entre os quadrantes 3x3
+            if ((i + 1) % 3 == 0 && i != 8) {
+                System.out.println("---------------------");
+            }
+        }
+    }
+
+
     public int countSolutions() {
         return backtrackCount(0, 0);
     }
