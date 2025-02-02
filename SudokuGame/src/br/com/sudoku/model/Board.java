@@ -1,7 +1,5 @@
 package br.com.sudoku.model;
 
-import br.com.sudoku.util.BoardTemplate;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,9 +12,7 @@ import static java.util.Objects.nonNull;
 public class Board {
 
     private final List<List<Space>> spaces = new ArrayList<>();
-
-    BoardTemplate template = new BoardTemplate();
-
+    
     public Board(int difficult) {
         for (int i = 0; i < 9; i++) {
             List<Space> row = new ArrayList<>(); // Criar uma linha (lista de 9 espaços)
