@@ -15,6 +15,8 @@ Destaques do Jogo:
 🔄 Reinício Rápido: Com apenas um clique, você pode começar um novo desafio ou reiniciar o tabuleiro atual.
 
 Game 2 🎮 Campo Minado em Java com Swing
+![image](https://github.com/user-attachments/assets/90278ed9-1957-452a-9cf9-712557799114)
+
 
 Este é um jogo clássico de Campo Minado desenvolvido em Java utilizando a biblioteca Swing para a interface gráfica. O objetivo do jogo é revelar todas as células do tabuleiro que não contêm minas, sem explodir nenhuma bomba.
 
