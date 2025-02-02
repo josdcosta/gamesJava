@@ -1,4 +1,5 @@
 Sudoku Master - Um Desafio Lógico e Viciante!
+
 O Sudoku Master é um jogo de quebra-cabeça clássico desenvolvido em Java, utilizando componentes da Swing API para criar uma interface gráfica intuitiva e responsiva. Com diferentes níveis de dificuldade, o jogo oferece uma experiência desafiadora para jogadores iniciantes e experientes.
 
 Destaques do Jogo:
