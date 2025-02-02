@@ -1,23 +1,32 @@
-package br.com.dominio.cm.modelo;
+package br.com.minesweeper.cm.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.dominio.cm.excecao.ExplosionException;
+import java.util.function.Consumer;
 
 public class Field {
 	
 	private final int row;
 	private final int col;
 	private boolean open = false;
-	private boolean marked = false;
+	private boolean checked = false;
 	private boolean mined = false;
 	
 	private List<Field> neighbors = new ArrayList<>();
-	
+
+	private List<FieldObserver> observers = new ArrayList<>();
+
+	private void notifyObservers(FieldEventEnum event){
+		observers.forEach(o -> o.eventTrigger(this, event));
+	}
+
 	Field(int row, int col) {
 		this.row = row;
 		this.col = col;
+	}
+
+	public void subscribe(FieldObserver observer){
+		observers.add(observer);
 	}
 	
 	public boolean addNeighbor(Field neighbor) {
@@ -40,18 +49,25 @@ public class Field {
 		}
 	}
 	
-	public void toggleMark() {
+	public void toggleCheck() {
 		if(!open) {
-			marked = !marked;
+			checked = !checked;
+			if(checked){
+				notifyObservers(FieldEventEnum.CHECK);
+			} else {
+				notifyObservers(FieldEventEnum.UNCHECK);
+			}
 		}
 	}
 	
-	boolean open() {
-		if(!marked && !open) {
-			open = true;
+	public boolean open() {
+		if(!checked && !open) {
 			if(mined) {
-				throw new ExplosionException();
+				notifyObservers(FieldEventEnum.EXPLOSION);
+				return true;
 			}
+
+			setOpened(true);
 			if(neighborhoodSafe()) {
 				neighbors.stream().forEach(v -> v.open());
 			}
@@ -61,7 +77,7 @@ public class Field {
 		}
 	}
 	
-	boolean neighborhoodSafe() {
+	public boolean neighborhoodSafe() {
 		return neighbors.stream().noneMatch(v -> v.mined);
 	}
 	
@@ -69,8 +85,8 @@ public class Field {
 		mined = true;
 	}
 	
-	public boolean isMarked() {
-		return marked;
+	public boolean isChecked() {
+		return checked;
 	}
 	
 	public boolean isOpen() {
@@ -79,6 +95,9 @@ public class Field {
 	
 	void setOpened(boolean open) {
 		this.open = open;
+		if(open){
+			notifyObservers(FieldEventEnum.OPEN);
+		}
 	}
 
 	public boolean isMined() {
@@ -95,32 +114,19 @@ public class Field {
 	
 	boolean goalAchieved() {
 		boolean desvendado = !mined && open;
-		boolean protegido = mined && marked;
+		boolean protegido = mined && checked;
 		return desvendado || protegido;
 	}
 	
-	long minesInTheNighborhood() {
-		return neighbors.stream().filter(v -> v.mined).count();
+	public int minesInTheNighborhood() {
+		return (int) neighbors.stream().filter(v -> v.mined).count();
 	}
 	
-	void reiniciar() {
+	void restart() {
 		open = false;
 		mined = false;
-		marked = false;
-	}
-	
-	public String toString() {
-		if(marked) {
-			return "[ x ]";
-		} else if(open && mined) {
-			return "[ * ]";
-		} else if(open && minesInTheNighborhood() > 0) {
-			return "[ " + Long.toString(minesInTheNighborhood()) + " ]";
-		} else if(open) {
-			return "";
-		} else {
-			return "[" + String.valueOf(row) + "," + String.valueOf(col) + "]";
-		}
+		checked = false;
+		notifyObservers(FieldEventEnum.REINICIAR);
 	}
 	
 }
