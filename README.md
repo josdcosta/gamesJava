@@ -1,4 +1,4 @@
-O Sudoku Master é um jogo de quebra-cabeça clássico desenvolvido em Java, utilizando componentes da Swing API para criar uma interface gráfica intuitiva e responsiva. Com diferentes níveis de dificuldade, o jogo oferece uma experiência desafiadora para jogadores iniciantes e experientes.
+Game 1 🎮 O Sudoku Master é um jogo de quebra-cabeça clássico desenvolvido em Java, utilizando componentes da Swing API para criar uma interface gráfica intuitiva e responsiva. Com diferentes níveis de dificuldade, o jogo oferece uma experiência desafiadora para jogadores iniciantes e experientes.
 
 Destaques do Jogo:
 
@@ -13,3 +13,21 @@ Destaques do Jogo:
 🏆 Sistema de Status: Identifica se o jogador está no caminho certo ou se cometeu algum erro.
 
 🔄 Reinício Rápido: Com apenas um clique, você pode começar um novo desafio ou reiniciar o tabuleiro atual.
+
+Game 2 🎮 Campo Minado em Java com Swing
+
+Este é um jogo clássico de Campo Minado desenvolvido em Java utilizando a biblioteca Swing para a interface gráfica. O objetivo do jogo é revelar todas as células do tabuleiro que não contêm minas, sem explodir nenhuma bomba.
+
+🚀 Funcionalidades
+
+Interface gráfica intuitiva e interativa com Swing
+
+Diferentes níveis de dificuldade (Fácil, Médio, Difícil)
+
+Temporizador para acompanhar o tempo de jogo
+
+Sistema de marcação de bandeiras para ajudar na estratégia
+
+Geração aleatória de minas a cada nova partida
+
+Mensagens de vitória ou derrota ao finalizar o jogo
