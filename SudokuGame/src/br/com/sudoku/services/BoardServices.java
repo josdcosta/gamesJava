@@ -12,7 +12,7 @@ public class BoardServices {
     private final Board board;
 
     public BoardServices() {
-        this.board = new Board(30);
+        this.board = new Board(Difficult.MODERATE.getLevel());
     }
 
     public List<List<Space>> getSpaces(){
@@ -20,7 +20,7 @@ public class BoardServices {
     }
 
     public void reset(){
-        this.board.reset();
+        this.board.reset(Difficult.MODERATE.getLevel());
     }
 
     public boolean hasErrors(){

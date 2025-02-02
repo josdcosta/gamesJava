@@ -200,7 +200,13 @@ public class Board {
         return !hasErrors() && getStatus().equals(COMPLETE);
     }
 
-    public void reset(){
-        spaces.forEach(c -> c.forEach(Space::clearSpace));
+    public void reset(int difficult){
+        do {
+            clearBoard(); // Reinicia o tabuleiro antes de tentar gerar novamente
+        } while (!generateBoard()); // Vai continuar tentando até o tabuleiro ser completamente preenchido
+
+        do {
+            fixedPositions(difficult);
+        } while (countSolutions() > 1); // Vai continuar tentando até o tabuleiro ser completamente preenchido
     }
 }

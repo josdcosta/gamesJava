@@ -104,20 +104,40 @@ public class MainScreen {
     }
 
     private void addResetButton(JPanel mainPanel) {
-        resetButton = new ResetButton(e ->{
+        resetButton = new ResetButton(e -> {
             var dialogResult = JOptionPane.showConfirmDialog(
                     null,
-                    "Dejesa reiniciar?",
+                    "Deseja reiniciar?",
                     "Limpar o jogo",
                     YES_NO_OPTION,
                     QUESTION_MESSAGE
             );
-            if(dialogResult == 0){
-                boardServices.reset();
-                notifierService.notify(EventEnum.CLEAR_SPACE);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                boardServices.reset(); // Reset dos dados internos
+                mainPanel.removeAll(); // Remove todos os componentes da tela
+
+                // Reconstroi os setores do tabuleiro dentro do mesmo mainPanel
+                for (int r = 0; r < 9; r += 3) {
+                    var endRow = r + 2;
+                    for (int c = 0; c < 9; c += 3) {
+                        var endCol = c + 2;
+                        var spaces = getSpacesFromSector(boardServices.getSpaces(), c, endCol, r, endRow);
+                        JPanel sector = genetateSection(spaces);
+                        mainPanel.add(sector);
+                    }
+                }
+
+                // Adiciona novamente os botões
+                addResetButton(mainPanel);
+                addShowGameStatusButton(mainPanel);
+                addFinishGameButton(mainPanel);
+
+                mainPanel.revalidate(); // Atualiza o layout
+                mainPanel.repaint(); // Re-renderiza a tela
             }
         });
         mainPanel.add(resetButton);
     }
+
 
 }
